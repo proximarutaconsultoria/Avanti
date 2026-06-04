@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Avanti</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Nunito',sans-serif;background:#f4f3f0;display:flex;justify-content:center;min-height:100vh;}
+.app{width:100%;max-width:480px;background:#f4f3f0;display:flex;flex-direction:column;min-height:100vh;}
+.screen{display:none;flex:1;flex-direction:column;}
+.screen.active{display:flex;}
+.hdr{background:#0F1B3D;color:#fff;padding:16px;text-align:center;}
+.hdr h1{font-family:'Pacifico',cursive;font-size:28px;margin:0;}
+.bdy{flex:1;padding:20px;overflow-y:auto;}
+.card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;}
+.btn{width:100%;padding:12px;background:#534AB7;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:700;margin-bottom:8px;}
+input{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;margin-bottom:10px;}
+.pbar{height:3px;background:#ddd;border-radius:2px;margin-bottom:12px;}
+.pbar-fill{height:100%;background:#534AB7;}
+.q-txt{font-size:16px;font-weight:700;margin:12px 0;}
+.btns{display:flex;gap:8px;margin-bottom:12px;}
+.btn-ans{flex:1;padding:10px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer;font-weight:700;}
+.btn-ans.s{background:#EAF3DE;border-color:#27500A;color:#27500A;}
+.btn-ans.i{background:#FAEEDA;border-color:#633806;color:#633806;}
+.btn-ans.n{background:#FCEBEB;border-color:#791F1F;color:#791F1F;}
+.res{background:#EEEDFE;border:1px solid #AFA9EC;border-radius:12px;padding:12px;margin-bottom:12px;}
+.cars{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.car{background:#f4f3f0;padding:8px;border-radius:8px;font-size:11px;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div id="s0" class="screen active">
+  <div class="hdr"><h1>Avanti</h1></div>
+  <div class="bdy" style="display:flex;flex-direction:column;justify-content:center;">
+    <div class="card">
+      <h2 style="font-size:18px;color:#0F1B3D;margin-bottom:12px;">Test de Orientación Vocacional</h2>
+      <p style="color:#666;line-height:1.6;margin-bottom:16px;">Este test te ayudará a descubrir qué carreras universitarias se alinean con tus intereses y capacidades.</p>
+      
+      <div style="background:#EEEDFE;border:1px solid #AFA9EC;border-radius:12px;padding:12px;margin-bottom:16px;font-size:12px;">
+        <p style="font-weight:700;color:#3C3489;margin-bottom:8px;">📋 Cómo funciona:</p>
+        <p style="color:#534AB7;margin-bottom:6px;">✓ Responderás <strong>60 preguntas</strong></p>
+        <p style="color:#534AB7;margin-bottom:6px;">✓ Para cada pregunta: Me gusta / Indiferencia / No me gusta</p>
+        <p style="color:#534AB7;margin-bottom:6px;">✓ No hay respuestas correctas o incorrectas</p>
+        <p style="color:#534AB7;margin-bottom:6px;">✓ Tiempo aprox: <strong>15-20 minutos</strong></p>
+        <p style="color:#534AB7;">✓ Al final recibirás tu perfil personalizado</p>
+      </div>
+
+      <div style="background:#FFF8E1;border:1px solid #FFD54F;border-radius:12px;padding:12px;margin-bottom:16px;font-size:12px;">
+        <p style="font-weight:700;color:#F57F17;margin-bottom:6px;">⚡ Importante:</p>
+        <p style="color:#E65100;">Responde <strong>honestamente</strong> según TUS intereses reales, no lo que creas que "deberías" responder.</p>
+      </div>
+
+      <button class="btn" onclick="p0()">Comenzar test</button>
+    </div>
+  </div>
+</div>
+  <div class="hdr"><h1>Avanti</h1></div>
+  <div class="bdy" style="display:flex;flex-direction:column;justify-content:center;">
+    <div class="card">
+      <input type="text" id="cod" placeholder="Codigo" style="text-transform:uppercase;text-align:center;"/>
+      <button class="btn" onclick="p1()">Ingresar</button>
+    </div>
+  </div>
+</div>
+
+<div id="s2" class="screen">
+  <div class="hdr"><h1>Datos</h1></div>
+  <div class="bdy">
+    <div class="card">
+      <input type="text" id="nom" placeholder="Nombre"/>
+      <input type="number" id="edad" placeholder="Edad"/>
+      <input type="text" id="esc" placeholder="Escuela"/>
+      <input type="tel" id="tel" placeholder="Telefono"/>
+      <button class="btn" onclick="p2()">Comenzar</button>
+    </div>
+  </div>
+</div>
+
+<div id="s3" class="screen">
+  <div class="hdr"><h1>Preguntas</h1></div>
+  <div class="bdy">
+    <div class="pbar"><div class="pbar-fill" id="pb"></div></div>
+    <div class="card">
+      <p style="text-align:center;color:#534AB7;font-weight:700;margin-bottom:12px;font-size:13px;">Responde me gusta / no me gusta / me es indiferente.<br>Este test solo te brindará las áreas de estudio donde se encuentran tus fortalezas y habilidades.</p>
+      <p style="color:#999;font-size:11px;">Pregunta <span id="pn">1</span>/60</p>
+      <p class="q-txt" id="q"></p>
+      <div class="btns">
+        <button class="btn-ans s" onclick="r(2)">Me gusta</button>
+        <button class="btn-ans i" onclick="r(1)">Indiferencia</button>
+        <button class="btn-ans n" onclick="r(0)">No me gusta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="s4" class="screen">
+  <div class="hdr"><h1>Resultados</h1></div>
+  <div class="bdy">
+    <div class="res">
+      <p style="font-weight:700;color:#1a1a1a;margin-bottom:8px;">Tus áreas principales:</p>
+      <div id="top3areas" style="margin-top:10px;"></div>
+    </div>
+    <div class="res">
+      <p style="font-weight:700;color:#1a1a1a;margin-bottom:10px;">Carreras recomendadas:</p>
+      <div class="cars" id="cars"></div>
+    </div>
+    <div class="res">
+      <p style="font-weight:700;color:#1a1a1a;margin-bottom:10px;">Dónde puedes estudiar:</p>
+      <div id="unis" style="font-size:12px;line-height:1.6;"></div>
+    </div>
+    <button class="btn" onclick="location.reload()">Hacer de nuevo</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const AREAS=["Ciencias Exactas y Naturales","Ciencias Sociales y Humanas","Arte y Diseno","Tecnologia e Informatica","Salud y Biologia","Derecho y Politica","Comunicacion y Medios","Economia y Administracion","Educacion y Psicologia","Ingenieria y Arquitectura","Terciarios (Tecnicaturas y Profesorados)"];
+const UNIS={0:{pub:["UBA: Lic. Matematica, Fisica, Quimica","UNLP: Lic. Matematica, Fisica"],priv:["Favaloro: Ciencias Naturales"],ext:["MIT (USA): Matematica, Fisica"]},1:{pub:["UBA: Lic. Sociologia, Historia, Filosofia","UNLP: Lic. Historia"],priv:["UdeSA: Lic. Humanidades"],ext:["Univ. Barcelona (España): Historia"]},2:{pub:["UBA: Lic. Artes, Diseno","UNLP: Lic. Artes"],priv:["Palermo: Diseno Grafico, Moda"],ext:["Accademia (Italia): Artes"]},3:{pub:["UBA: Lic. Computacion, Ing. Sistemas","UTN: Ing. Sistemas","UNLP: Lic. Informatica"],priv:["Palermo: Ing. IA","UdeSA: Ing. IA","ITBA: Ing. Sistemas"],ext:["MIT (USA): IA","Stanford (USA): Data Science"]},4:{pub:["UBA: Medicina, Odontologia, Enfermeria","UNLP: Medicina"],priv:["Favaloro: Medicina, Enfermeria","Hospital Italiano: Medicina"],ext:["Harvard Medical (USA): Medicina"]},5:{pub:["UBA: Abogacia, Ciencias Politicas","UNLP: Abogacia"],priv:["Austral: Abogacia","UCA: Abogacia"],ext:["Harvard Law (USA): Derecho"]},6:{pub:["UNLP: Periodismo, Comunicacion","UBA: Lic. Comunicacion"],priv:["Palermo: Comunicacion","UADE: Publicidad"],ext:["Columbia (USA): Periodismo"]},7:{pub:["UBA: Lic. Economia, Contador","UNLP: Lic. Economia"],priv:["UADE: Administracion","UdeSA: Lic. Administracion"],ext:["Harvard Business (USA): MBA"]},8:{pub:["UBA: Lic. Psicologia","UNLP: Lic. Psicologia"],priv:["Palermo: Psicologia","UCA: Psicologia"],ext:["Stanford (USA): Psicologia"]},9:{pub:["UBA: Ing. Civil, Industrial","UTN: Ingenierias","UNLP: Arquitectura"],priv:["ITBA: Ingenierias","Palermo: Arquitectura"],ext:["MIT (USA): Ingenieria"]},10:{pub:["INET: Profesorados","ISFD: Profesorados","IES: Tecnicaturas"],priv:["Palermo: Tecnicaturas","ORT: Tecnicaturas"],ext:[]}};
+const CARR=[["Prof. de Matematica","Lic. Fisica","Lic. Quimica","Lic. Economia","Lic. Geologia","Lic. Astronomia","Lic. Bioquimica"],["Lic. Sociologia","Lic. Historia","Lic. Filosofia","Lic. Antropologia","Lic. Recursos Humanos","Lic. Geografia","Arqueologia"],["Lic. Artes","Diseno Grafico","Diseno de Interiores","Artes Plasticas","Fotografia","Lic. Diseno Textil e Indumentaria","Audiovisuales"],["Lic. Informatica","Ing. en Sistemas","Ing. de Software","Lic. Ciencias de la Computacion","Ing. en IA","Data Science","Ciberseguridad"],["Medicina","Odontologia","Enfermeria","Instrumentador Quirurgico","Kinesiologia","Nutricion","Veterinaria"],["Abogacia","Ciencias Politicas","Relaciones Internacionales","Notariado","Relaciones Internacionales y Geopolitica","Administracion Publica","Derecho"],["Comunicacion Social","Periodismo","Publicidad","Cine y Television","Produccion Audiovisual","Marketing","Relaciones Publicas"],["Lic. Economia","Lic. Administracion","Contador Publico","Lic. Comercio","Finanzas","Actuario","Economia Empresarial"],["Lic. Psicologia","Lic. Psicopedagogia","Lic. en Ciencias de la Educacion","Docencia","Trabajo Social","Fonoaudiologia","Terapia Ocupacional"],["Arquitectura","Ing. Civil","Ing. Mecanica","Ing. Electrica","Ing. Industrial","Ing. Ambiental","Agrimensura"],["Prof. de Educacion Fisica","Prof. de Ingles","Tec. en Informatica","Tec. en Administracion","Tec. en Turismo","Tec. en Gastronomia","Prof. de Historia"]];
+const PQ=[{t:"Resolver ecuaciones o problemas matematicos complejos",a:0},{t:"Leer libros de historia o filosofia",a:1},{t:"Dibujar, pintar o crear obras visuales",a:2},{t:"Programar o desarrollar aplicaciones",a:3},{t:"Ayudar a personas enfermas o heridas",a:4},{t:"Debatir sobre leyes y derechos ciudadanos",a:5},{t:"Escribir articulos, notas o guiones",a:6},{t:"Analizar estados financieros o balances",a:7},{t:"Ensenar o explicar conceptos a otras personas",a:8},{t:"Disenar planos de edificios o estructuras",a:9},{t:"Realizar experimentos en un laboratorio",a:0},{t:"Estudiar el comportamiento humano en sociedad",a:1},{t:"Fotografiar paisajes o situaciones cotidianas",a:2},{t:"Armar o reparar computadoras y dispositivos",a:3},{t:"Investigar sobre enfermedades y tratamientos",a:4},{t:"Participar en debates politicos o sindicales",a:5},{t:"Producir contenido para redes sociales o medios",a:6},{t:"Gestionar proyectos o administrar recursos",a:7},{t:"Escuchar y aconsejar a personas con problemas",a:8},{t:"Calcular resistencia de materiales en construcciones",a:9},{t:"Observar fenomenos naturales o astronomicos",a:0},{t:"Analizar textos literarios o filosoficos",a:1},{t:"Disenar logos, afiches o identidades visuales",a:2},{t:"Configurar redes o servidores informaticos",a:3},{t:"Trabajar con plantas medicinales o sustancias quimicas",a:4},{t:"Redactar contratos, leyes o reglamentos",a:5},{t:"Entrevistar personas para difundir informacion",a:6},{t:"Crear estrategias de ventas o negocios",a:7},{t:"Trabajar con ninos o adolescentes en espacios educativos",a:8},{t:"Supervisar obras civiles o proyectos de infraestructura",a:9},{t:"Clasificar muestras biologicas o minerales",a:0},{t:"Estudiar costumbres y culturas de distintos pueblos",a:1},{t:"Crear esculturas, instalaciones o arte urbano",a:2},{t:"Desarrollar videojuegos o simulaciones 3D",a:3},{t:"Realizar estudios clinicos o diagnosticos medicos",a:4},{t:"Defender derechos de personas en situacion vulnerable",a:5},{t:"Dirigir o producir programas de radio o television",a:6},{t:"Llevar la contabilidad de una empresa",a:7},{t:"Disenar programas educativos o materiales didacticos",a:8},{t:"Proyectar instalaciones electricas o mecanicas",a:9},{t:"Usar estadisticas para analizar datos cientificos",a:0},{t:"Participar en proyectos de investigacion social",a:1},{t:"Animar personajes para cine o videojuegos",a:2},{t:"Automatizar procesos usando scripts o inteligencia artificial",a:3},{t:"Atender pacientes y hacer seguimiento de su salud",a:4},{t:"Estudiar tratados internacionales y relaciones entre paises",a:5},{t:"Editar fotos, videos o audio para publicaciones",a:6},{t:"Invertir o analizar mercados financieros",a:7},{t:"Apoyar emocionalmente a personas en crisis",a:8},{t:"Disenar maquinarias o sistemas de produccion",a:9},{t:"Investigar el origen del universo o de la materia",a:0},{t:"Escribir ensayos sobre temas sociales o politicos",a:1},{t:"Disenar vestimenta, escenoografias o decoracion de interiores",a:2},{t:"Implementar sistemas de ciberseguridad",a:3},{t:"Preparar medicamentos o estudiar su composicion",a:4},{t:"Participar en organizaciones comunitarias o de derechos humanos",a:5},{t:"Crear campanas publicitarias o de comunicacion",a:6},{t:"Negociar contratos o acuerdos comerciales",a:7},{t:"Investigar temas de aprendizaje y desarrollo cognitivo",a:8},{t:"Planificar el trazado de rutas, puentes o aeropuertos",a:9}];
+
+let resp=[],pn=0,u={},cod='';
+
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
+function p0(){show('s1');}
+
+function p1(){const c=document.getElementById('cod').value.toUpperCase();if(!c){alert('Ingresa un código');return;}if(c==='ADMIN2026'){cod=c;show('s2');return;}if(c==='ESCUELA2026'){const uses=parseInt(localStorage.getItem('ESCUELA2026_uses')||'0');if(uses>=73){alert('Código agotado (máximo 73 usos)');return;}localStorage.setItem('ESCUELA2026_uses',uses+1);cod=c;show('s2');return;}if(c.startsWith('EXTERNO2026')){const uses=parseInt(localStorage.getItem('EXTERNO2026_uses')||'0');if(uses>=1){alert('Este código ya se usó. Solicita uno nuevo.');return;}localStorage.setItem('EXTERNO2026_uses',1);cod=c;show('s2');return;}if(c.startsWith('CONSULTORIO2026')){const uses=parseInt(localStorage.getItem('CONSULTORIO2026_uses')||'0');if(uses>=1){alert('Este código ya se usó. Solicita uno nuevo.');return;}localStorage.setItem('CONSULTORIO2026_uses',1);cod=c;show('s2');return;}alert('Código inválido');}
+
+function p2(){u.n=document.getElementById('nom').value||'Alumno';u.e=document.getElementById('edad').value||'';u.esc=document.getElementById('esc').value||'';u.tel=document.getElementById('tel').value||'';resp=new Array(60).fill(null);pn=0;show('s3');render();}
+
+function render(){document.getElementById('pn').textContent=pn+1;document.getElementById('q').textContent=PQ[pn].t;document.getElementById('pb').style.width=((pn+1)/60*100)+'%';}
+
+function r(v){resp[pn]=v;if(pn<59){pn++;render();}else{fin();}}
+
+function fin(){const s=new Array(11).fill(0);const m=new Array(11).fill(0);for(let i=0;i<60;i++){m[PQ[i].a]+=2;if(resp[i]!==null)s[PQ[i].a]+=resp[i];}const p=[];for(let i=0;i<11;i++){p[i]=m[i]>0?Math.round(s[i]/m[i]*100):0;}const rk=[];for(let i=0;i<11;i++){rk.push({pct:p[i],idx:i});}rk.sort((a,b)=>b.pct-a.pct);const top1=rk[0];const top2=rk[1];const top3=rk[2];let top3html='<div style="margin-bottom:8px;"><strong style="color:#534AB7;">1. '+AREAS[top1.idx]+'</strong> ('+top1.pct+'%)</div>';top3html+='<div style="margin-bottom:8px;"><strong style="color:#534AB7;">2. '+AREAS[top2.idx]+'</strong> ('+top2.pct+'%)</div>';top3html+='<div><strong style="color:#534AB7;">3. '+AREAS[top3.idx]+'</strong> ('+top3.pct+'%)</div>';document.getElementById('top3areas').innerHTML=top3html;let cars='';var tops=[top1,top2,top3];for(let t=0;t<3;t++){cars+='<p style="color:#534AB7;font-weight:700;margin-top:12px;margin-bottom:6px;grid-column:1/-1;">'+AREAS[tops[t].idx]+':</p>';for(let i=0;i<CARR[tops[t].idx].length;i++){cars+='<div class="car">'+CARR[tops[t].idx][i]+'</div>';}}document.getElementById('cars').innerHTML=cars;let unishtml='';for(let t=0;t<3;t++){var u=UNIS[tops[t].idx];if(u){unishtml+='<p style="color:#0F1B3D;font-weight:700;margin-top:12px;margin-bottom:6px;">'+AREAS[tops[t].idx]+':</p>';if(u.pub&&u.pub.length>0){unishtml+='<p style="color:#534AB7;font-weight:700;font-size:11px;margin-bottom:4px;">PUBLICAS:</p>';for(let i=0;i<u.pub.length;i++){unishtml+='<div style="margin-bottom:4px;">'+u.pub[i]+'</div>';}}if(u.priv&&u.priv.length>0){unishtml+='<p style="color:#534AB7;font-weight:700;font-size:11px;margin-top:8px;margin-bottom:4px;">PRIVADAS:</p>';for(let i=0;i<u.priv.length;i++){unishtml+='<div style="margin-bottom:4px;">'+u.priv[i]+'</div>';}}if(u.ext&&u.ext.length>0){unishtml+='<p style="color:#534AB7;font-weight:700;font-size:11px;margin-top:8px;margin-bottom:4px;">EXTERIOR:</p>';for(let i=0;i<u.ext.length;i++){unishtml+='<div style="margin-bottom:4px;">'+u.ext[i]+'</div>';}}}}document.getElementById('unis').innerHTML=unishtml;send(top1,top2,top3);show('s4');}
+
+function send(top1,top2,top3){const url='https://script.google.com/macros/s/AKfycbyR8aNYpCKTmQaKxEMD5n3cTlh-XLo_5UK6qNjjDgibVt9l0oGRBeexxUidZe_8TOyyjw/exec';const data={fecha:new Date().toLocaleString('es-AR'),nombre:u.n||'',edad:u.e||'',escuela:u.esc||'',telefono:u.tel||'',tipoAcceso:cod||'',area1:AREAS[top1.idx]||'',area1Pct:top1.pct||0,area2:AREAS[top2.idx]||'',area2Pct:top2.pct||0,area3:AREAS[top3.idx]||'',area3Pct:top3.pct||0};fetch(url,{method:'POST',body:JSON.stringify(data)}).catch(e=>{});}
+</script>
+</body>
+</html>
